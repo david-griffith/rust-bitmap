@@ -1,0 +1,8 @@
+[package]
+name = "testfont"
+version = "0.1.0"
+authors = ["David Griffith <dgriffith@internode.on.net>"]
+description = "Takes a string and generates a vector containing a bitmap font, for easy overlay into images."
+
+[dependencies]
+bitfont = { path = "../" }
