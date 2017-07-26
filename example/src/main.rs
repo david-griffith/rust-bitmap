@@ -11,6 +11,7 @@ fn main() {
                 print!(" ");
             }
         }
+        println!();
     }
 
     use bitfont::bitmap_bool;
@@ -23,6 +24,7 @@ fn main() {
                 print!(" ");
             }
         }
+        println!();
     }
 
 }

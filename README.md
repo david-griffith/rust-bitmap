@@ -27,6 +27,7 @@ If the string contains characters outside this range, an error is returned.
                     print!(" ");
                 }
             }
+            println!();
         }
         
         use bitfont::bitmap_bool;
@@ -39,6 +40,7 @@ If the string contains characters outside this range, an error is returned.
                     print!(" ");
                 }
             }
+            println!();
         }
     }
 ```
