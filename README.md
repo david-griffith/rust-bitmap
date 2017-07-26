@@ -2,10 +2,10 @@
 A very simple bitmap font generator for rust.
 
 Contains a simple 8x8 bitmap font containing ASCII character codes from 0x20 - 7F (Space, 0-9, A-Z, a-z, punctuation)
+If the string contains characters outside the 0x20 - 0x7F ASCII range, an error is returned.
 
-It contains a few functions that you feed a string, and you'll get a Result in return that a vector containing each row of the bitmap.
-
-If the string contains characters outside this range, an error is returned.
+It contains a few functions that you feed a string, and you'll get a Result in return that has a vector of 8 vectors, with each vector containing the value for a single row of the generated bitmap font.
+This can then be easily looped through in your program to plug pixels into whatever imaging library you're using, or print to the console as in the example below.
 
  Functions currently implemented are:
  - A luma function that takes foreground/background brightness values and returns a vector of those, useful for greyscale.
