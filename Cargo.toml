@@ -2,6 +2,9 @@
 name = "bitfont"
 version = "0.1.0"
 authors = ["David Griffith <dgriffith@internode.on.net>"]
-description = "Takes a string and generates a vector containing a bitmap font, for easy overlay into images."
+description = "Takes an ASCII string and generates a vector containing a bitmap font, for easy overlay into images."
+readme = "README.md"
+license = "MIT/Apache-2.0"
+keywords = ["bitmap","font", "text"]
 
 [dependencies]
