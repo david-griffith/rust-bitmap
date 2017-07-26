@@ -39,29 +39,35 @@ static CHAR_ARRAY: [u64; 95] = [
 
 
 
-pub fn bitmap_bool(mystring: &str) -> Result<(usize, Vec<bool>), &str> {
+pub fn bitmap_bool(mystring: &str) -> Result<Vec<Vec<bool>>, &str> {
     /*
 
 Takes a string and turns it into a bitmap font.
-Returns the width of the string in pixels and a vector of bools that is (strlen * 8) wide and 8 high.
-When using this vector, move down one line when you reach the string width.
+Returns a vector that contains 8 vectors of bools for each row.
 
 eg:
-    let (mylen, my_vec) = bitmap_luma("Test string",1,0);
-    for (mycount,my_char) in my_vec.iter().enumerate() {
-	if my_char {print!("x")} else {print!(" ")}
-	if (mycount+1) % mylen == 0 {println!();}
+    let my_vec = bitmap_bool("Test string").unwrap();
+    for row_vec in my_vec {
+        for my_char in row_vec {
+            if my_char {
+                print!("█");
+            } else {
+                print!(" ");
+            }
+        }
     }
+
 */
 
     let mut return_array = Vec::new();
 
     for i in 0..8 {
         // Take an 8 bit slice from each array value.
+        let mut row_vec = Vec::new();
         for my_char in mystring.as_bytes() {
-    if (*my_char as isize - 0x20 > 95) | (*my_char as isize - 0x20 < 0) {
-	return Err("Character not in font.");
-    }
+            if (*my_char as isize - 0x20 > 95) | (*my_char as isize - 0x20 < 0) {
+                return Err("Character not in font.");
+            }
 
             let mut mycount = 0;
             let mut myval = CHAR_ARRAY[*my_char as usize - 0x20];
@@ -70,9 +76,9 @@ eg:
             myval = myval >> (i * 8);
             loop {
                 if myval & 1 == 1 {
-                    return_array.push(true);
+                    row_vec.push(true);
                 } else {
-                    return_array.push(false);
+                    row_vec.push(false);
                 }
                 myval = myval >> 1;
                 mycount += 1;
@@ -81,35 +87,43 @@ eg:
                 }
             }
         }
+        return_array.push(row_vec);
     }
-    return Ok((return_array.len() / 8, return_array));
+    return Ok(return_array);
 
 }
 
 
-pub fn bitmap_luma(mystring: &str, fgluma: u8, bgluma: u8) -> Result<(usize, Vec<u8>), &str> {
+pub fn bitmap_luma(mystring: &str, fgluma: u8, bgluma: u8) -> Result<Vec<Vec<u8>>, &str> {
     /*
 
+
 Takes a string and foreground/background luma values and turns it into a bitmap font.
-Returns the width of the string in pixels and a vector that is (strlen * 8) wide and 8 high.
-When using this vector, move down one line when you reach the string width.
+Returns a vector that contains 8 vectors of u8 for each row.
 
 eg:
-    let (mylen, my_vec) = bitmap_luma("Test string",1,0);
-    for (mycount,my_char) in my_vec.iter().enumerate() {
-	print!("{}",my_char);
-	if (mycount+1) % mylen == 0 {println!();}
+    let my_vec = bitmap_luma("Test string",1,0);
+    for row_vec in my_vec {
+        for my_char in row_vec {
+            if my_char > 0 {
+                print!("█");
+            } else {
+                print!(" ");
+            }
+        }
     }
+
 */
 
     let mut return_array = Vec::new();
 
     for i in 0..8 {
         // Take an 8 bit slice from each array value.
+        let mut row_vec = Vec::new();
         for my_char in mystring.as_bytes() {
-    if (*my_char as isize - 0x20 > 95) | (*my_char as isize - 0x20 < 0) {
-	return Err("Character not in font.");
-    }
+            if (*my_char as isize - 0x20 > 95) | (*my_char as isize - 0x20 < 0) {
+                return Err("Character not in font.");
+            }
 
             let mut mycount = 0;
             let mut myval = CHAR_ARRAY[*my_char as usize - 0x20];
@@ -118,9 +132,9 @@ eg:
             myval = myval >> (i * 8);
             loop {
                 if myval & 1 == 1 {
-                    return_array.push(fgluma);
+                    row_vec.push(fgluma);
                 } else {
-                    return_array.push(bgluma);
+                    row_vec.push(bgluma);
                 }
                 myval = myval >> 1;
                 mycount += 1;
@@ -129,8 +143,7 @@ eg:
                 }
             }
         }
+        return_array.push(row_vec);
     }
-    return Ok((return_array.len() / 8, return_array));
+    return Ok(return_array);
 }
-
-
