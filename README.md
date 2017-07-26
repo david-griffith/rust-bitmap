@@ -3,9 +3,7 @@ A very simple bitmap font generator for rust.
 
 Contains a simple 8x8 bitmap font containing ASCII character codes from 0x20 - 7F (Space, 0-9, A-Z, a-z, punctuation)
 
-It contains a few functions that you feed a string, and you'll get a Result in return :
- - a length at which a new row should start, and
- - a vector containing the bitmap.
+It contains a few functions that you feed a string, and you'll get a Result in return that a vector containing each row of the bitmap.
 
 If the string contains characters outside this range, an error is returned.
 
@@ -20,31 +18,31 @@ If the string contains characters outside this range, an error is returned.
     
     fn main() {
         use bitfont::bitmap_luma;
-        let (my_len, my_vec) = bitmap_luma("abc123456", 8, 0).unwrap();
-        for (my_count, my_char) in my_vec.iter().enumerate() {
-            if my_char > &0 {
-                print!("█");
-            } else {
-                print!(" ");
-            }
-            if (my_count + 1) % my_len == 0 {
-                println!();
+        let my_vec = bitmap_luma("abc123456", 8, 0).unwrap();
+        for my_row in my_vec {
+	    for my_char in my_row {
+        	if my_char > 0 {
+            	    print!("█");
+        	} else {
+            	    print!(" ");
+        	}
             }
         }
         
         use bitfont::bitmap_bool;
-        let (my_len, my_vec) = bitmap_bool("abc123456").unwrap();
-        for (my_count, my_char) in my_vec.iter().enumerate() {
-            if *my_char {
-                print!("█");
-            } else {
-                print!(" ");
-            }
-            if (my_count + 1) % my_len == 0 {
-                println!();
-            }
-        }
-    
+        let my_vec = bitmap_bool("abc123456").unwrap();
+        for my_row in my_vec {
+	    for my_char in my_row {
+        	if *my_char {
+            	    print!("█");
+        	} else {
+            	    print!(" ");
+        	}
+        	if (my_count + 1) % my_len == 0 {
+            	    println!();
+        	}
+    	    }
+	}
     }
 ```
  
