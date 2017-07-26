@@ -20,33 +20,30 @@ If the string contains characters outside this range, an error is returned.
         use bitfont::bitmap_luma;
         let my_vec = bitmap_luma("abc123456", 8, 0).unwrap();
         for my_row in my_vec {
-	    for my_char in my_row {
-        	if my_char > 0 {
-            	    print!("█");
-        	} else {
-            	    print!(" ");
-        	}
+            for my_char in my_row {
+                if my_char > 0 {
+                    print!("█");
+                } else {
+                    print!(" ");
+                }
             }
         }
         
         use bitfont::bitmap_bool;
         let my_vec = bitmap_bool("abc123456").unwrap();
         for my_row in my_vec {
-	    for my_char in my_row {
-        	if *my_char {
-            	    print!("█");
-        	} else {
-            	    print!(" ");
-        	}
-        	if (my_count + 1) % my_len == 0 {
-            	    println!();
-        	}
-    	    }
-	}
+            for my_char in my_row {
+                if *my_char {
+                    print!("█");
+                } else {
+                    print!(" ");
+                }
+            }
+        }
     }
 ```
  
- Running the example code above should generate the following from the grayscale and mono functions:
+ Running the example code above should generate the following from the luma and bool functions:
 
 ```
         ███               ██     ████    ████      ███  ██████    ███   
